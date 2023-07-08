@@ -6,6 +6,10 @@ const app = express();
 const PORT = 3001 || process.env.PORT;
 const converter = require("./endpoints/Converter");
 
+// app.use(cors({
+//     origin: process.env.CLIENT
+// }));
+
 app.use("/api", converter);
 
 app.listen(PORT, () => {

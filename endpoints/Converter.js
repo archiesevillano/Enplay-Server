@@ -2,9 +2,17 @@ const express = require("express");
 const router = express.Router();
 const Axios = require("axios");
 
-router.get("/converter/download", async (req, res) => {
-    const url = "https://www.youtube.com/watch?v=IeP_UNgaYbs";
-    const { AIOV_API_KEY, AIOV_HOST } = process.env;
+const requireAccessKey = (req, res, next) => {
+    if (!req.body.accessKey === process.env.ACCESS_KEY) {
+        next(new Error("Permission denied"));
+        return;
+    }
+    next();
+}
+
+router.get("/converter", requireAccessKey, async (req, res) => {
+    const url = req.body.url;
+    const { AIOV_API_KEY, AIOV_HOST, AIOV_URL } = process.env;
 
     console.log("AIOV_API_KEY: ");
     console.log(AIOV_API_KEY);
@@ -17,7 +25,7 @@ router.get("/converter/download", async (req, res) => {
 
     const options = {
         method: 'GET',
-        url: 'https://aiov-download-youtube-videos.p.rapidapi.com/GetVideoDetails',
+        url: AIOV_URL,
         params: {
             URL: url,
         },
