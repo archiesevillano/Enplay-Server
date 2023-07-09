@@ -3,13 +3,18 @@ const router = express.Router();
 const Axios = require("axios");
 
 const requireAccessKey = (req, res, next) => {
-    console.log(req.body.accessKey);
-    console.log(req.body.url);
-    if (!req.body.accessKey === process.env.ACCESS_KEY) {
-        next(new Error("Permission denied"));
-        return;
+    try {
+        console.log(req.body.accessKey);
+        console.log(req.body.url);
+        if (!req.body.accessKey === process.env.ACCESS_KEY) {
+            next(new Error("Permission denied"));
+            return;
+        }
+        next();
     }
-    next();
+    catch (error) {
+        console.log(error);
+    }
 }
 
 router.get("/converter", requireAccessKey, async (req, res) => {
