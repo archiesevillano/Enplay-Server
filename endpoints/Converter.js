@@ -4,6 +4,8 @@ const Axios = require("axios");
 
 const requireAccessKey = (req, res, next) => {
     try {
+        console.log(req);
+        console.log(req.body);
         console.log(req.body.accessKey);
         console.log(req.body.url);
         if (!req.body.accessKey === process.env.ACCESS_KEY) {
