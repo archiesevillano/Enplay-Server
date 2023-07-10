@@ -2,7 +2,6 @@ const express = require("express");
 const router = express.Router();
 const Axios = require("axios");
 
-
 const requireAccessKey = (req, res, next) => {
     try {
         if (!req.body.accessKey === process.env.ACCESS_KEY) {

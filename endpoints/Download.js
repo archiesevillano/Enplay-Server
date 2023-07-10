@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
-const downloader = require("js-file-downloader");
+const fileDownload = require("js-file-download");
+const router = express.Router();
 
 const requireAccessKey = (req, res, next) => {
     try {
@@ -17,17 +18,16 @@ const requireAccessKey = (req, res, next) => {
 }
 
 router.post("/download", requireAccessKey, async (req, res) => {
-    const fileUrl = req.body.url;
 
-    console.log("Download Starting...");
+    const fileUrl = req.body.url;
+    const title = req.body.title;
+    const ext = req.body.ext;
+
+    const fs = require('fs');
+    const download = require('download');
 
     try {
-        await new JsFileDownloader({
-            url: fileUrl
-        });
-
-        console.log("Downloaded Successfully");
-        res.send("Downloaded Successfully");
+        download(fileUrl).pipe(fs.createWriteStream(`Downloads/${title}.${ext}`));
     }
     catch (error) {
         console.log(error);
