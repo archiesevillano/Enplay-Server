@@ -2,12 +2,9 @@ const express = require("express");
 const router = express.Router();
 const Axios = require("axios");
 
+
 const requireAccessKey = (req, res, next) => {
     try {
-        console.log(req);
-        console.log(req.body);
-        console.log(req.body.accessKey);
-        console.log(req.body.url);
         if (!req.body.accessKey === process.env.ACCESS_KEY) {
             next(new Error("Permission denied"));
             return;
@@ -16,10 +13,11 @@ const requireAccessKey = (req, res, next) => {
     }
     catch (error) {
         console.log(error);
+        res.send(error);
     }
 }
 
-router.get("/converter", requireAccessKey, async (req, res) => {
+router.post("/converter", requireAccessKey, async (req, res) => {
     const url = req.body.url;
     const { AIOV_API_KEY, AIOV_HOST, AIOV_URL } = process.env;
 
