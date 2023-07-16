@@ -6,7 +6,6 @@ const app = express();
 const PORT = 3001 || process.env.PORT;
 
 const converter = require("./endpoints/Converter");
-const download = require("./endpoints/Download");
 const contact = require("./endpoints/Emailer");
 
 app.use(express.json());
