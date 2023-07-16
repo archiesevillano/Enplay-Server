@@ -16,7 +16,6 @@ app.use(cors({
 
 // routes
 app.use("/converter", converter);
-app.use("/api", download);
 app.use("/send", contact);
 
 app.listen(PORT, () => {
