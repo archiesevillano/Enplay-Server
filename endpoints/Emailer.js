@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const nodemailer = require("nodemailer");
-const { MAIL_ACC, TO_EMAIL } = process.env;
+const { MAIL_ACC, TO_EMAIL, MAIL_PSWD } = process.env;
 
 const requireAccessKey = (req, res, next) => {
     try {
@@ -21,7 +21,7 @@ const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
         user: MAIL_ACC,
-        pass: 'mpchpzbcreeelgbr'
+        pass: MAIL_PSWD
     },
     tls: {
         rejectUnauthorized: false
